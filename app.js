@@ -4,6 +4,7 @@
    No hay persistencia de datos: todo vive en memoria mientras la página está abierta.
    ========================================================================= */
 
+   // Archivo principal de JavaScript para RutaControl
 /* ---------- Reloj de cabecera (contexto visual, no es una de las 10 interacciones) ---------- */
 const relojEl = document.getElementById("reloj-actual");
 

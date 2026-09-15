@@ -36,11 +36,7 @@
 }
 
 body {
-  margin: 0;
-  background-color: var(--color-fondo);
-  color: var(--color-texto);
-  font-family: var(--fuente-texto);
-  line-height: 1.5;
+  transition: background-color 0.3s ease;
 }
 
 /* ---------- 2. Tipografía general ---------- */
