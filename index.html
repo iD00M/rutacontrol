@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RutaControl · Centro de operaciones logísticas</title>
+
+  <!-- Tipografías: Space Grotesk para títulos/datos, Inter para texto de lectura -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- ======================= CABECERA ======================= -->
+  <header class="cabecera">
+    <div class="cabecera__marca">
+      <span class="cabecera__logo" aria-hidden="true">◆</span>
+      <div>
+        <p class="cabecera__titulo">RutaControl</p>
+        <p class="cabecera__subtitulo">Panel de operaciones — última milla</p>
+      </div>
+    </div>
+    <div class="cabecera__estado">
+      <span class="cabecera__punto" aria-hidden="true"></span>
+      <span>Turno activo</span>
+      <span class="cabecera__reloj" id="reloj-actual">--:--:--</span>
+    </div>
+  </header>
+
+  <main class="contenedor">
+
+    <section class="intro">
+      <h1>Prototipo de seguimiento de despachos</h1>
+      <p>
+        Diez interacciones independientes que demuestran cómo el equipo de operaciones
+        podría actualizar estados, calcular datos y validar información sin recargar la
+        página. Cada tarjeta indica qué acción probar y qué resultado esperar.
+      </p>
+    </section>
+
+    <div class="grid-tarjetas">
+
+      <!-- ============================================================
+           INTERACCIÓN 01 — Actualización de estado (evento click)
+           Seleccionar: botón #btn-actualizar-estado y párrafo #estado-mensaje-operativo
+           Escuchar: click
+           Procesar: elegir un mensaje operativo y obtener la hora actual
+           Representar: reemplazar el textContent del párrafo de estado
+      ============================================================= -->
+      <article class="tarjeta" id="tarjeta-01">
+        <header class="tarjeta__cabecera">
+          <span class="tarjeta__numero">01</span>
+          <h2 class="tarjeta__titulo">Actualización de estado</h2>
+        </header>
+        <p class="tarjeta__instruccion">
+          Acción: presiona "Actualizar estado". Resultado esperado: el mensaje operativo
+          cambia e incluye la hora del registro.
+        </p>
+
+        <p class="estado-operativo" id="estado-mensaje-operativo">
+          Centro de despacho en funcionamiento normal.
+        </p>
+
+        <button class="boton boton--primario" id="btn-actualizar-estado" type="button">
+          Actualizar estado
+        </button>
+      </article>
+
+      <!-- ============================================================
+           INTERACCIÓN 02 — Cambio de estado visual (boolean + clase CSS)
+           Seleccionar: botón #btn-toggle-ruta, insignia #badge-estado-ruta
+           Escuchar: click
+           Procesar: invertir variable booleana rutaActiva
+           Representar: agregar/quitar clase "activa" y actualizar el texto
+      ============================================================= -->
+      <article class="tarjeta" id="tarjeta-02">
+        <header class="tarjeta__cabecera">
+          <span class="tarjeta__numero">02</span>
+          <h2 class="tarjeta__titulo">Cambio de estado visual</h2>
+        </header>
+        <p class="tarjeta__instruccion">
+          Acción: presiona "Cambiar estado de la ruta". Resultado esperado: la insignia
+          alterna entre "En ruta" y "Detenida" cambiando también de color.
+        </p>
+
+        <div class="fila-ruta">
+          <span>Ruta 07 — San Bernardo</span>
+          <span class="insignia" id="badge-estado-ruta">Detenida</span>
+        </div>
+
+        <button class="boton boton--secundario" id="btn-toggle-ruta" type="button">
+          Cambiar estado de la ruta
+        </button>
+      </article>
+
+      <!-- ============================================================
+           INTERACCIÓN 03 — Contador operativo (variable + función render)
+           Seleccionar: botones #btn-sumar-entrega / #btn-reiniciar-entregas,
+                        elemento #contador-entregas
+           Escuchar: click
+           Procesar: incrementar o reiniciar la variable totalEntregas
+           Representar: función renderizarContador() actualiza el DOM
+      ============================================================= -->
+      <article class="tarjeta" id="tarjeta-03">
+        <header class="tarjeta__cabecera">
+          <span class="tarjeta__numero">03</span>
+          <h2 class="tarjeta__titulo">Contador operativo</h2>
+        </header>
+        <p class="tarjeta__instruccion">
+          Acción: registra entregas con "+1 entrega". Resultado esperado: el contador
+          sube y puede reiniciarse a cero.
+        </p>
+
+        <p class="contador" id="contador-entregas">0</p>
+        <p class="contador__etiqueta">paquetes entregados en el turno</p>
+
+        <div class="fila-botones">
+          <button class="boton boton--primario" id="btn-sumar-entrega" type="button">+1 entrega</button>
+          <button class="boton boton--fantasma" id="btn-reiniciar-entregas" type="button">Reiniciar</button>
+        </div>
+      </article>
+
+      <!-- ============================================================
+           INTERACCIÓN 04 — Mostrar y ocultar detalle
+           Seleccionar: botón #btn-toggle-detalle, contenedor #detalle-tecnico
+           Escuchar: click
+           Procesar: invertir la visibilidad del detalle
+           Representar: alternar clase "oculto" y cambiar el texto del botón
+      ============================================================= -->
+      <article class="tarjeta" id="tarjeta-04">
+        <header class="tarjeta__cabecera">
+          <span class="tarjeta__numero">04</span>
+          <h2 class="tarjeta__titulo">Mostrar y ocultar detalle</h2>
+        </header>
+        <p class="tarjeta__instruccion">
+          Acción: presiona "Ver detalle técnico". Resultado esperado: se muestra u oculta
+          la ficha del vehículo asignado, y el botón cambia de texto.
+        </p>
+
+        <button class="boton boton--secundario" id="btn-toggle-detalle" type="button">
+          Ver detalle técnico
+        </button>
+
+        <div class="detalle oculto" id="detalle-tecnico">
+          <p><strong>Vehículo:</strong> Furgón F-12</p>
+          <p><strong>Patente:</strong> RT-LC 4521</p>
+          <p><strong>Última revisión:</strong> 02-09-2026</p>
+        </div>
+      </article>
+
+      <!-- ============================================================
+           INTERACCIÓN 05 — Vista previa en tiempo real (evento input)
+           Seleccionar: textarea #input-nota-despacho, salida #preview-nota,
+                        contador #contador-caracteres, botón #btn-limpiar-nota
+           Escuchar: input, click
+           Procesar: leer value en cada pulsación y contar caracteres
+           Representar: reflejar el texto en la vista previa y actualizar el contador
+      ============================================================= -->
+      <article class="tarjeta" id="tarjeta-05">
+        <header class="tarjeta__cabecera">
+          <span class="tarjeta__numero">05</span>
+          <h2 class="tarjeta__titulo">Vista previa en tiempo real</h2>
+        </header>
+        <p class="tarjeta__instruccion">
+          Acción: escribe una nota de despacho. Resultado esperado: el texto se refleja
+          de inmediato abajo junto con el conteo de caracteres.
+        </p>
+
+        <textarea class="campo-texto" id="input-nota-despacho" rows="2"
+          placeholder="Ej: Ruta 07 retrasada por corte de tránsito en Av. Central"></textarea>
+
+        <p class="vista-previa" id="preview-nota">La nota aparecerá aquí…</p>
+        <div class="fila-ruta">
+          <span class="contador__etiqueta"><span id="contador-caracteres">0</span> caracteres</span>
+          <button class="boton boton--fantasma" id="btn-limpiar-nota" type="button">Limpiar</button>
+        </div>
+      </article>
+
+      <!-- ============================================================
+           INTERACCIÓN 06 — Selección y cálculo
+           Seleccionar: select #select-vehiculo, input #input-distancia-km,
+                        botón #btn-calcular-costo, salida #resultado-calculo
+           Escuchar: click
+           Procesar: convertir el valor a Number y calcular costo = distancia * tarifa
+           Representar: escribir el resultado formateado en el DOM
+      ============================================================= -->
+      <article class="tarjeta" id="tarjeta-06">
+        <header class="tarjeta__cabecera">
+          <span class="tarjeta__numero">06</span>
+          <h2 class="tarjeta__titulo">Selección y cálculo</h2>
+        </header>
+        <p class="tarjeta__instruccion">
+          Acción: elige un vehículo, ingresa la distancia y presiona "Calcular".
+          Resultado esperado: el costo estimado del envío en pesos.
+        </p>
+
+        <label class="etiqueta-campo" for="select-vehiculo">Tipo de vehículo</label>
+        <select class="campo-select" id="select-vehiculo">
+          <option value="moto">Moto — $180 / km</option>
+          <option value="furgon">Furgón — $320 / km</option>
+          <option value="camion">Camión pequeño — $480 / km</option>
+        </select>
+
+        <label class="etiqueta-campo" for="input-distancia-km">Distancia estimada (km)</label>
+        <input class="campo-texto" id="input-distancia-km" type="number" min="0" step="0.1" placeholder="Ej: 12.5">
+
+        <button class="boton boton--primario" id="btn-calcular-costo" type="button">Calcular costo</button>
+
+        <p class="resultado" id="resultado-calculo">Costo estimado: —</p>
+      </article>
+
+      <!-- ============================================================
+           INTERACCIÓN 07 — Rango y progreso
+           Seleccionar: input range #range-carga, texto #texto-carga-porcentaje,
+                        relleno de barra #barra-carga-fill
+           Escuchar: input
+           Procesar: leer el valor numérico del rango
+           Representar: actualizar el texto y el ancho (width) de la barra
+      ============================================================= -->
+      <article class="tarjeta" id="tarjeta-07">
+        <header class="tarjeta__cabecera">
+          <span class="tarjeta__numero">07</span>
+          <h2 class="tarjeta__titulo">Rango y progreso</h2>
+        </header>
+        <p class="tarjeta__instruccion">
+          Acción: mueve el control deslizante. Resultado esperado: el porcentaje de carga
+          del vehículo y la barra de progreso se actualizan en conjunto.
+        </p>
+
+        <input class="campo-rango" id="range-carga" type="range" min="0" max="100" value="35">
+        <p class="contador__etiqueta">Carga del vehículo: <span id="texto-carga-porcentaje">35</span>%</p>
+
+        <div class="barra-progreso">
+          <div class="barra-progreso__relleno" id="barra-carga-fill" style="width: 35%;"></div>
+        </div>
+      </article>
+
+      <!-- ============================================================
+           INTERACCIÓN 08 — Creación y eliminación dinámica
+           Seleccionar: input #input-nueva-tarea, botón #btn-agregar-tarea,
+                        lista #lista-tareas
+           Escuchar: click (agregar), click delegado (eliminar)
+           Procesar: leer el texto ingresado y validar que no esté vacío
+           Representar: crear un <li> con createElement/append y eliminarlo con remove()
+      ============================================================= -->
+      <article class="tarjeta" id="tarjeta-08">
+        <header class="tarjeta__cabecera">
+          <span class="tarjeta__numero">08</span>
+          <h2 class="tarjeta__titulo">Creación y eliminación dinámica</h2>
+        </header>
+        <p class="tarjeta__instruccion">
+          Acción: escribe una tarea pendiente del turno y presiona "Agregar".
+          Resultado esperado: la tarea aparece en la lista y puede eliminarse con "✕".
+        </p>
+
+        <div class="fila-ruta">
+          <input class="campo-texto" id="input-nueva-tarea" type="text" placeholder="Ej: Confirmar dirección Ruta 04">
+          <button class="boton boton--primario" id="btn-agregar-tarea" type="button">Agregar</button>
+        </div>
+
+        <ul class="lista" id="lista-tareas">
+          <li class="lista__item">
+            <span>Revisar combustible flota A</span>
+            <button class="boton-eliminar" type="button" aria-label="Eliminar tarea">✕</button>
+          </li>
+        </ul>
+      </article>
+
+      <!-- ============================================================
+           INTERACCIÓN 09 — Filtrado de una colección
+           Seleccionar: input #input-filtro-rutas, elementos .lista-rutas__item
+           Escuchar: input
+           Procesar: comparar el texto ingresado (en minúsculas) contra cada ruta
+           Representar: mostrar/ocultar cada elemento cambiando su estilo display
+      ============================================================= -->
+      <article class="tarjeta" id="tarjeta-09">
+        <header class="tarjeta__cabecera">
+          <span class="tarjeta__numero">09</span>
+          <h2 class="tarjeta__titulo">Filtrado de una colección</h2>
+        </header>
+        <p class="tarjeta__instruccion">
+          Acción: escribe una comuna o un estado (ej: "demorada"). Resultado esperado:
+          la lista de rutas se filtra al instante, sin recargar la página.
+        </p>
+
+        <input class="campo-texto" id="input-filtro-rutas" type="text" placeholder="Filtrar por comuna o estado…">
+
+        <ul class="lista-rutas" id="lista-rutas">
+          <li class="lista-rutas__item"><span>Ruta 01 — Providencia</span><span class="insignia insignia--activa">En ruta</span></li>
+          <li class="lista-rutas__item"><span>Ruta 02 — Ñuñoa</span><span class="insignia insignia--alerta">Demorada</span></li>
+          <li class="lista-rutas__item"><span>Ruta 03 — La Florida</span><span class="insignia insignia--ok">Entregada</span></li>
+          <li class="lista-rutas__item"><span>Ruta 04 — Maipú</span><span class="insignia insignia--activa">En ruta</span></li>
+          <li class="lista-rutas__item"><span>Ruta 05 — Puente Alto</span><span class="insignia">Pendiente</span></li>
+          <li class="lista-rutas__item"><span>Ruta 06 — Las Condes</span><span class="insignia insignia--ok">Entregada</span></li>
+        </ul>
+      </article>
+
+      <!-- ============================================================
+           INTERACCIÓN 10 — Formulario y validación
+           Seleccionar: formulario #form-incidencia y sus campos
+           Escuchar: submit
+           Procesar: preventDefault(), leer y validar cada campo
+           Representar: mostrar mensaje de error o de confirmación en #mensaje-formulario
+      ============================================================= -->
+      <article class="tarjeta tarjeta--ancha" id="tarjeta-10">
+        <header class="tarjeta__cabecera">
+          <span class="tarjeta__numero">10</span>
+          <h2 class="tarjeta__titulo">Registro de incidencia</h2>
+        </header>
+        <p class="tarjeta__instruccion">
+          Acción: completa el formulario y presiona "Registrar incidencia". Resultado
+          esperado: si falta un dato se muestra un error; si está completo, se confirma
+          el registro sin recargar la página.
+        </p>
+
+        <form class="formulario" id="form-incidencia" novalidate>
+          <div class="formulario__campo">
+            <label class="etiqueta-campo" for="campo-operador">Nombre del operador</label>
+            <input class="campo-texto" id="campo-operador" type="text" placeholder="Ej: Jordan Reyes">
+          </div>
+
+          <div class="formulario__campo">
+            <label class="etiqueta-campo" for="campo-ruta-incidencia">Ruta afectada</label>
+            <input class="campo-texto" id="campo-ruta-incidencia" type="text" placeholder="Ej: Ruta 04 — Maipú">
+          </div>
+
+          <div class="formulario__campo">
+            <label class="etiqueta-campo" for="campo-tipo-incidencia">Tipo de incidencia</label>
+            <select class="campo-select" id="campo-tipo-incidencia">
+              <option value="">Selecciona una opción…</option>
+              <option value="retraso">Retraso en ruta</option>
+              <option value="direccion">Dirección incorrecta</option>
+              <option value="dano">Paquete dañado</option>
+              <option value="accidente">Accidente o desperfecto</option>
+            </select>
+          </div>
+
+          <div class="formulario__campo formulario__campo--ancho">
+            <label class="etiqueta-campo" for="campo-descripcion-incidencia">Descripción</label>
+            <textarea class="campo-texto" id="campo-descripcion-incidencia" rows="2"
+              placeholder="Describe brevemente lo ocurrido"></textarea>
+          </div>
+
+          <button class="boton boton--primario" type="submit">Registrar incidencia</button>
+        </form>
+
+        <p class="mensaje-formulario" id="mensaje-formulario"></p>
+      </article>
+
+    </div>
+  </main>
+
+  <footer class="pie">
+    <p>Prototipo académico — EPE1 Desarrollo Full Stack, IPCHILE. Sin persistencia de datos: todo se reinicia al recargar.</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
